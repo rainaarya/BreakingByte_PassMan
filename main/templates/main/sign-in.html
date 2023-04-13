@@ -1,0 +1,58 @@
+{% load static %}
+<html>
+
+<head>
+  <title>Sign In</title>
+  <link rel="stylesheet" href="{% static 'css/sign-in.css' %}">
+</head>
+
+<body>
+  <div class="login screen">
+    <div class="header-2">
+      <div class="nav-list">
+        <div class="sections">
+          <div class="place-2 dmsans-normal-comet-18px">Home</div>
+          <div class="about dmsans-normal-comet-18px">About</div>
+          <div class="link-list">
+            <div class="resources dmsans-normal-comet-18px">Resources</div>
+          </div>
+          <div class="place-2 dmsans-normal-comet-18px">Contact</div>
+        </div>
+        <div class="master-primary-button">
+          <div class="button-text dmsans-bold-white-16px">Get started</div>
+        </div>
+      </div>
+      <div class="group-5-copy">
+        <div class="typography-type">BreakingByte</div>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="image-placeholder">
+        <img class="image-icon" src="image-icon.svg" alt="Image icon" />
+      </div>
+      <div class="form">
+      <form method="POST">
+        {% csrf_token %}
+        <h1 class="heading">Sign In</h1>
+        <div class="label label-2 dmsans-bold-comet-18px">Email</div>
+        <div class="master-input-text">
+          <input name="username" class="input-placeholder input dmsans-normal-manatee-18px"
+            style="background-color: transparent; border: none; outline: none;" placeholder="Username" />
+        </div>
+        <div class="label-1 label-2 dmsans-bold-comet-18px">Password</div>
+        <div class="master-input-text">
+          <input type="password" name="password" class="input-placeholder input dmsans-normal-manatee-18px"
+            style="background-color: transparent; border: none; outline: none;" placeholder="Password" />
+        </div>
+        <div class="master-primary-button-1">
+          <button type="submit" class="button-text-1"
+            style="cursor: pointer; background-color: transparent; border: none; outline: none;">Sign In
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

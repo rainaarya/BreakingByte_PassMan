@@ -1,0 +1,91 @@
+{% load static %}
+<html>
+
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/sign-up.css' %}">
+
+</head>
+
+<body>
+    <div class="sign-up screen">
+        <div class="header-2">
+            <div class="frame-5-copy">
+                <div class="typography-type">BreakingByte</div>
+            </div>
+            <div class="nav-list">
+                <div class="sections">
+                    <div class="place dmsans-normal-comet-18px">Home</div>
+                    <div class="about dmsans-normal-comet-18px">About</div>
+                    <div class="link-list">
+                        <div class="resources dmsans-normal-comet-18px">Resources</div>
+                    </div>
+                    <div class="place-1 dmsans-normal-comet-18px">Contact</div>
+                </div>
+                <div class="frame-39515">
+                    <div class="master-secondary-button">
+                        <div class="button-text">Login</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper">
+            <div class="image-placeholder"></div>
+            <div class="form">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h1 class="heading">Sign Up</h1>
+                    <div class="label dmsans-bold-comet-18px">Username</div>
+                    <div class="master-input-text">
+                        <div class="input-left input">
+                            <input name="{{ form.username.name }}"
+                                class="input-placeholder input dmsans-normal-manatee-18px"
+                                style="background-color: transparent; border: none; outline: none;"
+                                placeholder="Username" />
+
+                        </div>
+                    </div>
+                    <div class="label-1 label-4 dmsans-bold-comet-18px">Email</div>
+                    <div class="master-input-text">
+                        <div class="input-left-4">
+                            <input name="{{ form.email.name }}"
+                                class="input-placeholder input dmsans-normal-manatee-18px"
+                                style="background-color: transparent; border: none; outline: none;"
+                                placeholder="Email" />
+                        </div>
+                    </div>
+                    <div class="label-2 label-4 dmsans-bold-comet-18px">Password</div>
+                    <div class="master-input-text">
+                        <div class="input-left-4">
+                            <input type="password" name="{{ form.password1.name }}"
+                                class="input-placeholder input dmsans-normal-manatee-18px"
+                                style="background-color: transparent; border: none; outline: none;"
+                                placeholder="Minimum 8 characters" />
+                        </div>
+                    </div>
+                    <div class="label-3 label-4 dmsans-bold-comet-18px">Confirm Password</div>
+                    <div class="master-input-text">
+                        <div class="input-left-4">
+                            <input type="password" name="{{ form.password2.name }}"
+                                class="input-placeholder input dmsans-normal-manatee-18px"
+                                style="background-color: transparent; border: none; outline: none;"
+                                placeholder="Confirm Password" />
+                        </div>
+                    </div>
+                    <div class="master-primary-button">
+                        <button type="submit" class="button-text-1"
+                            style="cursor: pointer; background-color: transparent; border: none; outline: none;">Sign Up
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if form.errors %}
+        <div class="error">
+            {{ form.errors }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

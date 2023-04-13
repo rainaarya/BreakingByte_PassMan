@@ -1,0 +1,348 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,700");
+
+:root {
+    --black: 
+  rgba(0, 0, 0, 1);
+    --comet: 
+  rgba(93, 89, 136, 1);
+    --manatee: 
+  rgba(141, 139, 166, 1);
+    --zircon: 
+  rgba(249, 248, 255, 1);
+    --white: 
+  rgba(255, 255, 255, 1);
+  
+    --font-size-s: 16px;
+    --font-size-m: 18px;
+    --font-size-l: 32px;
+    --font-size-xl: 44px;
+  
+    --font-family-dm_sans: "DM Sans";
+  }
+  
+  /* Classes */
+  
+  .dmsans-bold-comet-18px {
+    color: var(--comet);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-m);
+    font-weight: 700;
+    font-style: normal;
+  }
+  .dmsans-normal-comet-18px {
+    color: var(--comet);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    font-style: normal;
+  }
+  .dmsans-normal-manatee-18px {
+    color: var(--manatee);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.login {
+  align-items: flex-start;
+  background-color: var(--white);
+  border: 1px none;
+  display: flex;
+  flex-direction: column;
+  min-width: 1440px;
+  position: relative;
+}
+
+.hidden,
+.hidden * {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.header-2 {
+  background-color: var(--white);
+  height: 117.85px;
+  min-width: 1440px;
+  position: relative;
+}
+
+.group-5-copy {
+  align-items: center;
+  display: flex;
+  height: 48px;
+  left: 59px;
+  min-width: 265px;
+  padding: 0 0px;
+  position: absolute;
+  top: 35px;
+}
+
+.oval-copy-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-left: 2px;
+  margin-top: 9.82px;
+  min-height: 22px;
+  width: 10px;
+}
+
+.oval-copy-2 {
+  height: 10px;
+  width: 10px;
+}
+
+.oval {
+  height: 10px;
+  margin-left: 0;
+  width: 10px;
+}
+
+.group-3-copy-2 {
+  align-self: flex-end;
+  height: 10px;
+  margin-bottom: 7.97px;
+  width: 10px;
+}
+
+.typography-type {
+  color: var(--comet);
+  font-family: var(--font-family-dm_sans);
+  font-size: var(--font-size-l);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 48px;
+  margin-left: 22px;
+  min-width: 207px;
+  white-space: nowrap;
+}
+
+.oval-container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2.3px;
+  margin-left: 3px;
+  min-height: 34px;
+  width: 10px;
+}
+
+.oval-copy-2-1 {
+  height: 10px;
+  margin-top: 3px;
+  width: 10px;
+}
+
+.oval-copy {
+  height: 10px;
+  margin-top: 2px;
+  width: 10px;
+}
+
+.nav-list {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+  justify-content: flex-end;
+  left: 679px;
+  padding: 0px 0px 0px 25px;
+  position: absolute;
+  top: 32px;
+  width: 651px;
+}
+
+.master-primary-button {
+  align-items: center;
+  background-color: var(--comet);
+  border-radius: 30px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 18px 24px;
+  position: relative;
+  width: fit-content;
+}
+
+.button-text {
+    color: white;
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-s);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+  }
+.sections {
+  align-items: center;
+  display: flex;
+  gap: 33px;
+  justify-content: flex-end;
+  position: relative;
+  width: fit-content;
+}
+
+.about {
+  letter-spacing: 0;
+  line-height: 18px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.login .place-2 {
+  letter-spacing: 0;
+  line-height: 18px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.link-list {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  position: relative;
+  width: fit-content;
+}
+
+.resources {
+  letter-spacing: 0;
+  line-height: 18px;
+  margin-top: -1px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.vector {
+  height: 7.23px;
+  margin-right: -0.7px;
+  min-width: 13.07px;
+  position: relative;
+}
+
+.wrapper {
+  background-color: var(--white);
+  height: 926px;
+  min-width: 1440px;
+  position: relative;
+}
+
+.form {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  left: 107px;
+  min-height: 433px;
+  position: absolute;
+  top: 84px;
+  width: 512px;
+}
+
+.master-input-text {
+  align-items: flex-start;
+  background-color: var(--zircon);
+  border-radius: 50px;
+  display: flex;
+  margin-top: 12px;
+  min-width: 506px;
+  padding: 26px 24px;
+}
+
+
+
+.input-placeholder-1 {
+  letter-spacing: 0;
+  line-height: 18px;
+  min-width: 79px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.master-primary-button-1 {
+  align-items: center;
+  background-color: var(--comet);
+  border-radius: 30px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-left: 0.7px;
+  margin-top: 53px;
+  padding: 18px 24px;
+  position: relative;
+  width: 503px;
+}
+
+.button-text-1 {
+    color: var(--white);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-s);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+.login .label-2 {
+  letter-spacing: 0;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.label-1 {
+  margin-top: 32px;
+}
+
+.heading {
+  color: var(--comet);
+  font-family: var(--font-family-dm_sans);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 50px;
+  white-space: nowrap;
+}
+
+.input-placeholder {
+  letter-spacing: 0;
+  line-height: 18px;
+  min-width: 174px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.label {
+  margin-top: 40px;
+}
+
+.image-placeholder {
+  align-items: center;
+  background-color: var(--zircon);
+  display: flex;
+  height: 926px;
+  left: 720px;
+  min-width: 720px;
+  padding: 0 279.9px;
+  position: absolute;
+  top: 0;
+}
+
+.image-icon {
+  height: 141px;
+  width: 160px;
+}
