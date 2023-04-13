@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 #import messages
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -42,6 +43,7 @@ def sign_up(request):
     context = {'form': form}
     return render(request, 'main/sign-up.html', context)
 
+@login_required(login_url='sign-in')
 def sign_out(request):
     logout(request)
     return redirect('home')
