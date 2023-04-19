@@ -1,0 +1,108 @@
+{% load static %}
+<html>
+
+<head>
+    <title>Sign In</title>
+    <link rel="stylesheet" href="{% static 'css/generate.css' %}">
+    <script src="https://kit.fontawesome.com/60f93b821e.js" crossorigin="anonymous"></script>
+
+<body>
+    <div class="generate screen">
+        <div class="headers-v5">
+            <div class="group-5-copy">
+                <div class="typography-type">BreakingByte</div>
+            </div>
+            <div class="navbar">
+                <div class="navbar-link dmsans-normal-comet-18px">Home</div>
+                <div class="navbar-link-my-passwords dmsans-normal-comet-18px">My Passwords</div>
+                <div class="navbar-link-generate navbar-link">Generate</div>
+                <div class="link-list">
+                    <div class="share dmsans-normal-comet-18px">Share</div>
+                </div>
+                <div class="navbar-link dmsans-normal-comet-18px">Rewards</div>
+                <div class="buttons-set">
+                    <div class="master-primary-button">
+                        <div class="button-text">Logout</div>
+                    </div>
+                    <i class="fa fa-thin fa-user fa-2xl" style="color: #1f3151;"></i>
+                </div>
+            </div>
+
+        </div>
+        <h1 class="heading heading-2">Generate Password</h1>
+        <div class="card">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="overlap-group">
+                    <div class="heading-1 heading-2">Customize Password Strength</div>
+                    <div class="label-1 label-2 dmsans-bold-comet-18px">Options</div>
+                    <div class="flex-row">
+                        <div class="mdicheckbox-container">
+                            <label class="pure-material-checkbox">
+                                
+                                <input type="checkbox" name="uppercase" {% if uppercase %} checked {% endif %}>
+                                <span></span>
+                            </label>
+                            <label class="pure-material-checkbox">                                
+                                <input type="checkbox" name="lowercase" {% if lowercase %} checked {% endif %}>
+                                <span></span>
+                            </label>
+                        </div>
+                        <div class="input-placeholder-container">
+                            <div class="input-placeholder dmsans-normal-comet-18px">Uppercase</div>
+                            <div class="input-placeholder dmsans-normal-comet-18px">Lowercase</div>
+                        </div>
+                        <div class="mdicheckbox-container-1">
+                            <label class="pure-material-checkbox">
+                                <input type="checkbox" name="numbers" {% if numbers %} checked {% endif %}>
+                                <span></span>
+                            </label>
+                            <label class="pure-material-checkbox">
+                                <input type="checkbox" name="symbols" {% if special_chars %} checked {% endif %}>
+                                <span></span>
+                            </label>
+                        </div>
+                        <div class="input-placeholder-container-1">
+                            <div class="input-placeholder dmsans-normal-comet-18px">Numbers</div>
+                            <div class="input-placeholder dmsans-normal-comet-18px">Symbols</div>
+                        </div>
+                    </div>
+                    <div class="x12px-1 x12px-2">
+                        <div class="label label-2 dmsans-bold-comet-18px">Generated Password</div>
+                        <div class="text-area">
+                            {% if password %}
+                            <div class="text-area-placeholder dmsans-normal-manatee-18px">{{ password }}</div>
+                            {% else %}
+                            <div class="text-area-placeholder dmsans-normal-manatee-18px">Password is generated here
+                            </div>
+                            {% endif %}
+                            <i class="fa fa-thin fa-clipboard"></i>
+                        </div>
+                    </div>
+                    <div class="master-primary-button-1">
+                        <button type="submit" class="button-text-1"
+                            style="cursor: pointer; background-color: transparent; border: none; outline: none;">Generate
+                        </button>
+                    </div>
+                </div>
+                <div class="form-columns form">
+                    <div class="form-column form">
+                        <div class="x12px-2">
+                            <div class="label label-2 dmsans-bold-comet-18px">Length</div>
+                            <div class="input-text">
+                                <div class="master-input-text">
+                                    <input name="length" class="input-placeholder input dmsans-normal-manatee-18px"
+                                        style="background-color: transparent; border: none; outline: none;"
+                                        {% if length %} value="{{ length }}" {% else %} placeholder="Length" {% endif %}>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
