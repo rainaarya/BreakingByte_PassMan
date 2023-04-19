@@ -22,10 +22,10 @@ def generate_password(length, uppercase, lowercase, special_chars, numbers):
     if numbers:
         characters += string.digits
     
-    if length > 50:
-        return "Length must be between 4 and 50 characters."
+    if length > 45:
+        return "Length must be between 4 and 45 characters."
     elif length < 4:
-        return "Length must be between 4 and 50 characters."
+        return "Length must be between 4 and 45 characters."
 
     if characters == '':
         print('Error: No characters selected for password generation.')
