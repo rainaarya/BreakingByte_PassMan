@@ -21,6 +21,11 @@ def generate_password(length, uppercase, lowercase, special_chars, numbers):
         characters += string.punctuation
     if numbers:
         characters += string.digits
+    
+    if length > 50:
+        return "Length must be between 4 and 50 characters."
+    elif length < 4:
+        return "Length must be between 4 and 50 characters."
 
     if characters == '':
         print('Error: No characters selected for password generation.')
