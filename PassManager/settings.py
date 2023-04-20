@@ -72,6 +72,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PassManager.wsgi.application'
 
+SECRET_HERE = "kPu34=k1(Rda`p*r78]zHXI:%|H-4D"
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

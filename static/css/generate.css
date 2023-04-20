@@ -17,6 +17,7 @@
     --font-size-s: 16px;
     --font-size-m: 18px;
     --font-size-l: 26px;
+    --font-size-l2: 32px;
     --font-size-xl: 44px;
     --font-size-xxxl: 30px;
   
@@ -402,7 +403,7 @@
 .typography-type {
   color: var(--comet);
   font-family: var(--font-family-dm_sans);
-  font-size: var(--font-size-l);
+  font-size: var(--font-size-l2);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 48px;
