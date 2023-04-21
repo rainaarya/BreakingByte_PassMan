@@ -9,4 +9,6 @@ urlpatterns = [
     path('my-passwords/', views.my_passwords, name='my-passwords'),
     path('add-password/', views.add_password, name='add-password'),
     path('view-edit-password', views.view_edit_password, name='view-edit-password'),
+    path('share-password', views.share_password, name='share-password'),
+    path('share', views.share, name='share'),
 ]

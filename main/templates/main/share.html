@@ -2,23 +2,23 @@
 <html>
 
 <head>
-    <title>My Passwords</title>
-    <link rel="stylesheet" href="{% static 'css/my-passwords.css' %}">
+    <title>Share</title>
+    <link rel="stylesheet" href="{% static 'css/share.css' %}">
     <script src="https://kit.fontawesome.com/60f93b821e.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="my-passwords screen">
+    <div class="share-page screen">
         <div class="headers-v5">
             <div class="group-5-copy">
                 <div class="typography-type">BreakingByte</div>
             </div>
             <div class="navbar">
                 <div class="navbar-link dmsans-normal-comet-18px">Home</div>
-                <div class="navbar-link-my-passwords dmsans-bold-comet-24px">My Passwords</div>
+                <div class="navbar-link dmsans-normal-comet-18px">My Passwords</div>
                 <div class="navbar-link dmsans-normal-comet-18px">Generate</div>
                 <div class="link-list">
-                    <div class="share dmsans-normal-comet-18px">Share</div>
+                    <div class="navbar-link-share dmsans-bold-comet-24px">Share</div>
                 </div>
                 <div class="navbar-link dmsans-normal-comet-18px">Rewards</div>
                 <div class="buttons-set">
@@ -31,10 +31,9 @@
             </div>
 
         </div>
-        <h1 class="heading">List of Your Credentials</h1>
         <form method="POST">
             {% csrf_token %}
-            <div class="master-input-text">
+            <div class="master-input-text" style="margin-bottom: 10px;">
                 <i class="fa fa-light fa-magnifying-glass fa-xl"
                     style="color: #5d5986; margin-top: 35px; margin-left: 30px;"></i>
 
@@ -43,17 +42,15 @@
                     placeholder="Search">
             </div>
         </form>
+        {% if passwords %}
+        <h1 class="heading" style="margin-right: 50px; margin-bottom: -20px;">Shared With Others</h1>
+        {% endif %}
 
-        <a href="/add-password" class="flex-row-1" style="text-decoration: none;">
-            <div class="overlap-group4">
-                <i class="fa fa-regular fa-plus fa-xl" style="color: #ffffff; margin-left: 8px;"></i>
-            </div>
-            <div class="add dmsans-bold-comet-24px">Add</div>
-        </a>
 
         <form method="POST">
             {% csrf_token %}
             {% for password in passwords %}
+
             <div class="overlap-group2">
                 <div class="card">
                     <div class="overlap-group">
@@ -68,34 +65,56 @@
                         </p>
                     </div>
                     <div class="master-link">
-                        <button name="view-password" class="x-credentials dmsans-bold-manatee-18px"
+                        <button name="view-password-user" class="x-credentials dmsans-bold-manatee-18px"
                             value="{{ password.id }}" type="submit" class="x-credentials dmsans-bold-manatee-18px"
                             style="cursor: pointer; background-color: transparent; border: none; outline: none;">
                             <i class="fa fa-light fa-eye fa-lg" style="color: #8d8ba5; margin-right: 5px;"></i>
                             View Credentials
                         </button>
                     </div>
-                    <div class="master-link-1">
-                        <button name="share" class="x-credentials dmsans-bold-manatee-18px"
-                            value="{{ password.id }}" type="submit" class="x-credentials dmsans-bold-manatee-18px"
-                            style="cursor: pointer; background-color: transparent; border: none; outline: none; color: #598abb;">
-                            <i class="fa fa-thin fa-share-nodes fa-lg" style="margin-right: 5px; color: #598abb;"></i>
-                            Share Credentials
-                        </button>
-                    </div>
-                    <div class="master-link" style="margin-left: 465px;">
+                    <div class="master-link" style="margin-left: 250px;">
 
-                        <button name="delete" value="{{ password.id }}" type="submit"
+                        <button name="stop-sharing" value="{{ password.id }}" type="submit"
                             class="x-credentials dmsans-bold-manatee-18px"
                             style="cursor: pointer; background-color: transparent; border: none; outline: none; color: #c96878;">
                             <i class="fa fa-solid fa-trash" style="color: #c96878; margin-right: 5px;"></i>
-                            Delete Credentials
+                            Stop Sharing
                         </button>
 
                     </div>
 
                 </div>
 
+            </div>
+            {% endfor %}
+
+            {% if shared_passwords %}
+            <h1 class="heading" style="margin-right: 90px; margin-bottom: -20px;">Shared By Others</h1>
+            {% endif %}
+
+            {% for shared_with_me_passwords in shared_passwords %}
+            <div class="overlap-group2">
+                <div class="card">
+                    <div class="overlap-group">
+                        <div class="flex-row">
+                            <div class="image-placeholder">
+                                <img class="image-icon" src="{{ shared_with_me_passwords.website_link }}" alt="Image icon" />
+                            </div>
+                            <div class="card-heading dmsans-bold-comet-28px">{{ shared_with_me_passwords.website_name }}</div>
+                        </div>
+                        <p class="paragraph dmsans-normal-amethyst-smoke-18px">
+                            {{ shared_with_me_passwords.website_notes }}
+                        </p>
+                    </div>
+                    <div class="master-link">
+                        <button name="view-password-shared" class="x-credentials dmsans-bold-manatee-18px"
+                            value="{{ shared_with_me_passwords.id }}" type="submit" class="x-credentials dmsans-bold-manatee-18px"
+                            style="cursor: pointer; background-color: transparent; border: none; outline: none;">
+                            <i class="fa fa-light fa-eye fa-lg" style="color: #8d8ba5; margin-right: 5px;"></i>
+                            View Credentials
+                        </button>
+                    </div>
+                </div>
             </div>
             {% endfor %}
             <div class="overlap-group5"></div>

@@ -10,6 +10,7 @@ class Password_Details(models.Model):
     website_username = models.CharField(max_length=100)
     website_password = models.CharField(max_length=1000)
     website_notes = models.TextField(blank=True)
+    shared_with = models.ManyToManyField(User, related_name='shared_with', blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
