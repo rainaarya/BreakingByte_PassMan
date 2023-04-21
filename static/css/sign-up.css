@@ -288,6 +288,7 @@
     margin-top: 12px;
     min-width: 506px;
     padding: 26px 24px;
+    margin-bottom: 40px;
   }
 
 .sign-up .input-left-4 {
@@ -300,7 +301,7 @@
 
 .sign-up .input {
   position: relative;
-  width: fit-content;
+  width: 500px;
 }
 
 .input-placeholder {
