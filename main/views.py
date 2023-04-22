@@ -461,5 +461,5 @@ def two_fa(request):
         return redirect('sign-in')
 
 
-# def two_fa_page(request):
-#     return render(request, 'main/2fa_setup.html')
+def rewards(request):
+    return render(request, 'main/rewards.html')
