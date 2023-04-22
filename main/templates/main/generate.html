@@ -17,15 +17,19 @@
                 <div class="navbar-link-my-passwords dmsans-normal-comet-18px">
                     <a href="/my-passwords" style="text-decoration: none;">My Passwords</a>
                 </div>
-                <div class="navbar-link-generate navbar-link"><a href="/generate" style="text-decoration: none;">Generate</a></div>
+                <div class="navbar-link-generate navbar-link"><a href="/generate"
+                        style="text-decoration: none;">Generate</a></div>
                 <div class="link-list">
-                    <div class="share dmsans-normal-comet-18px"><a href="/share" style="text-decoration: none;">Share</a></div>
+                    <div class="share dmsans-normal-comet-18px"><a href="/share"
+                            style="text-decoration: none;">Share</a></div>
                 </div>
-                <div class="navbar-link dmsans-normal-comet-18px"><a href="" style="text-decoration: none;">Rewards</a></div>
+                <div class="navbar-link dmsans-normal-comet-18px"><a href="" style="text-decoration: none;">Rewards</a>
+                </div>
                 <div class="buttons-set">
                     <div class="master-primary-button">
-                        <div class="button-text"><a href="/sign-out" class="button-text" style="text-decoration: none;">Logout
-                        </a></div>
+                        <div class="button-text"><a href="/sign-out" class="button-text"
+                                style="text-decoration: none;">Logout
+                            </a></div>
                     </div>
                     <i class="fa fa-light fa-user fa-2xl" style="color: #5d5986;"></i>
                 </div>
@@ -42,11 +46,11 @@
                     <div class="flex-row">
                         <div class="mdicheckbox-container">
                             <label class="pure-material-checkbox">
-                                
+
                                 <input type="checkbox" name="uppercase" {% if uppercase %} checked {% endif %}>
                                 <span></span>
                             </label>
-                            <label class="pure-material-checkbox">                                
+                            <label class="pure-material-checkbox">
                                 <input type="checkbox" name="lowercase" {% if lowercase %} checked {% endif %}>
                                 <span></span>
                             </label>
@@ -74,12 +78,29 @@
                         <div class="label label-2 dmsans-bold-comet-18px">Generated Password</div>
                         <div class="text-area">
                             {% if password %}
-                            <div class="text-area-placeholder dmsans-normal-manatee-18px">{{ password }}</div>
+                            <div id="textGen" class="text-area-placeholder dmsans-normal-manatee-18px">{{ password }}</div>
                             {% else %}
-                            <div class="text-area-placeholder dmsans-normal-manatee-18px">Password is generated here
+                            <div id="textGen" class="text-area-placeholder dmsans-normal-manatee-18px">Password is generated here
                             </div>
+
                             {% endif %}
-                            <i class="fa fa-thin fa-clipboard"></i>
+                            <i class="fa fa-light fa-clipboard fa-lg" style="color: #5d5986; margin-top: 10px; margin-left: 30px; cursor: pointer;" id="copyIcon"></i>
+                            <script>
+                                const copyIcon = document.getElementById("copyIcon");
+                                const myDiv = document.getElementById("textGen");
+
+                                copyIcon.addEventListener("click", function() {
+                                    const text = myDiv.innerText;
+                                    const tempInput = document.createElement("textarea");
+                                    tempInput.value = text;
+                                    document.body.appendChild(tempInput);
+                                    tempInput.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(tempInput);
+                                    alert("Text copied to clipboard");
+                                });
+                            </script>
+
                         </div>
                     </div>
                     <div class="master-primary-button-1">
@@ -95,8 +116,7 @@
                             <div class="input-text">
                                 <div class="master-input-text">
                                     <input name="length" class="input-placeholder input dmsans-normal-manatee-18px"
-                                        style="background-color: transparent; border: none; outline: none;"
-                                        {% if length %} value="{{ length }}" {% else %} placeholder="Length (4 to 45)" {% endif %}>
+                                        style="background-color: transparent; border: none; outline: none;" {% if length %} value="{{ length }}" {% else %} placeholder="Length (4 to 45)" {% endif %}>
                                 </div>
                             </div>
                         </div>

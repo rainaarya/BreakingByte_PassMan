@@ -7,12 +7,26 @@ from django.http import HttpResponse
 #import messages
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Password_Details
+from .models import Password_Details, Profile
 from .encryption import encrypt, decrypt
 from django.conf import settings
+from io import BytesIO
+import base64
 
 import random
 import string
+
+import pyotp
+import qrcode
+
+def generate_secret_key():
+    totp = pyotp.TOTP(pyotp.random_base32())
+    return totp.secret
+
+def verify_totp(secret_key, token):
+    totp = pyotp.TOTP(secret_key)
+    return totp.verify(token)
+
 
 
 def generate_password(length, uppercase, lowercase, special_chars, numbers):
@@ -66,8 +80,28 @@ def sign_up(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponse("Account created successfully!")
+            user_form = form.save()
+            profile = Profile.objects.create(user=user_form)
+            profile.secret_key = generate_secret_key()
+            profile.save()
+
+            # Generate QR code
+            qr_code = qrcode.QRCode(version=None, box_size=10, border=4)
+            totp = pyotp.TOTP(profile.secret_key)
+            qr_code.add_data(totp.provisioning_uri(profile.user.email, issuer_name="BreakingByte"))
+            qr_code.make(fit=True)
+
+            # Generate QR code image
+            img = qr_code.make_image(fill_color="black", back_color="white")
+            buffer = BytesIO()
+            img.save(buffer, format='PNG')
+            img_byte = buffer.getvalue()
+            
+            img_base64 = base64.b64encode(img_byte).decode('utf-8')
+
+            # Render 2FA setup page with QR code image and secret key
+            return render(request, 'main/2fa_setup.html', {'img_base64': img_base64, 'secret_key': profile.secret_key})
+
         else:
             return render(request, 'main/sign-up.html', {'form': form})
 
@@ -110,9 +144,10 @@ def my_passwords(request):
                 else:
                     return HttpResponse("You can't delete this password!")
                 
-            if request.POST.get('view-password'):
+            if request.POST.get('view-password'):                                        
                 request.session['id_pass'] = request.POST.get('view-password')
-                return redirect('view-edit-password')
+                return redirect('two_fa')   
+
             
             if request.POST.get('search'):
                 search = request.POST.get('search')
@@ -200,15 +235,24 @@ def view_edit_password(request):
             request.session.pop('id_pass')
             password_details = Password_Details.objects.get(id=id_pass)
             if request.user == password_details.user or password_details.shared_with.contains(request.user):
+
+                if password_details.viewable == False:
+                    return HttpResponse("You must verify with 2FA before viewing this password.")
                 
-                password_details.website_name = password_details.website_name.capitalize()
-                password_details.website_notes = password_details.website_notes.capitalize()
-                password_details.website_password = decrypt(
-                    settings.SECRET_HERE.encode(), password_details.website_password)
-                password_details.website_password = decrypt(
-                    settings.SECRET_HERE.encode(), password_details.website_password)
+                else:
+                    password_details.viewable = False
+                    password_details.save()
                 
-                return render(request, 'main/view-edit-password.html', {'password': password_details})
+                    password_details.website_name = password_details.website_name.capitalize()
+                    password_details.website_notes = password_details.website_notes.capitalize()
+                    password_details.website_password = decrypt(
+                        settings.SECRET_HERE.encode(), password_details.website_password)
+                    password_details.website_password = decrypt(
+                        settings.SECRET_HERE.encode(), password_details.website_password)
+                    
+
+
+                    return render(request, 'main/view-edit-password.html', {'password': password_details})
             
             else:
                 return redirect('my-passwords')
@@ -216,7 +260,7 @@ def view_edit_password(request):
         else:
             return redirect('my-passwords')
 
-
+@login_required(login_url='sign-in')
 def share_password(request):
     if request.user.is_authenticated:
         # if request session contains id_pass
@@ -270,6 +314,7 @@ def share_password(request):
     else:
         return redirect('sign-in')
     
+@login_required(login_url='sign-in')
 def share(request):
 
     if request.user.is_authenticated:
@@ -279,9 +324,15 @@ def share(request):
 
         if request.method == 'POST':
 
+            # if request.POST.get('view-password-user'):
+            #     request.session['id_pass'] = request.POST.get('view-password-user')
+            #     return redirect('view-edit-password')
+            
             if request.POST.get('view-password-user'):
+    
                 request.session['id_pass'] = request.POST.get('view-password-user')
-                return redirect('view-edit-password')
+                return redirect('two_fa')
+   
             
             if request.POST.get('stop-sharing'):
                 password_details = Password_Details.objects.get(id=request.POST.get('stop-sharing'))
@@ -291,10 +342,15 @@ def share(request):
                 else:
                     return HttpResponse("You are not authorized to stop sharing this password!")
 
+            # if request.POST.get('view-password-shared'):
+            #     request.session['id_pass'] = request.POST.get('view-password-shared')
+            #     return redirect('view-edit-password')
+
             if request.POST.get('view-password-shared'):
+
                 request.session['id_pass'] = request.POST.get('view-password-shared')
-                return redirect('view-edit-password')
-            
+                return redirect('two_fa')
+
             if request.POST.get('search'):
                 search = True
                 search_text = request.POST.get('search')
@@ -333,3 +389,69 @@ def share(request):
 
     else:
         return redirect('sign-in')
+    
+@login_required(login_url='sign-in')
+def two_fa(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+
+            otp=request.POST.get('otp')
+            # Verify OTP
+            secret_key = request.user.profile.secret_key
+            if secret_key:
+                is_valid = verify_totp(secret_key, otp)
+                if not is_valid:
+                    password_id = request.session.get('id_pass')
+                    #pop id_pass from session
+                    request.session.pop('id_pass')
+                    try:
+                        password_detail = Password_Details.objects.get(id=password_id)
+                        password_detail.viewable = False
+                        password_detail.save()
+                        return HttpResponse("Invalid OTP")
+                    except Password_Details.DoesNotExist:
+                        return HttpResponse("Password does not exist.")
+                    
+                else:
+                    password_id = request.session.get('id_pass')
+                    try:
+                        password_detail = Password_Details.objects.get(id=password_id)
+                        password_detail.viewable = True
+                        password_detail.save()                                                    
+                        #request.session['id_pass'] = request.POST.get('view-password-user')
+                        return redirect('view-edit-password')
+                    except Password_Details.DoesNotExist:
+                        request.session.pop('id_pass')
+                        return HttpResponse("Password does not exist.")
+            else:
+                return HttpResponse("You must setup 2FA before viewing passwords.")
+        else:
+            if 'id_pass' in request.session:
+                id_pass = request.session['id_pass']
+                # pop the id_pass_sharing from the session
+                #request.session.pop('id_pass_sharing')
+                try:
+                    password_details = Password_Details.objects.get(id=id_pass)
+                except Password_Details.DoesNotExist:
+                    request.session.pop('id_pass')
+                    return HttpResponse("Password does not exist.")
+                
+                password_details_needed = {}
+                if request.user != password_details.user and not(password_details.shared_with.contains(request.user)):
+                    request.session.pop('id_pass')
+                    return redirect('my-passwords')
+                else:
+                    password_details_needed = {
+                        'website_name': password_details.website_name.capitalize(),
+                        'website_link': "https://www.google.com/s2/favicons?sz=128&domain_url=" + password_details.website_link,
+
+                    }
+                return render(request, 'main/two_fa.html', {'password_details_needed': password_details_needed})                        
+            else:
+                return redirect('my-passwords')
+            
+    else:
+        return redirect('sign-in')
+
+
+

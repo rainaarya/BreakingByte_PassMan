@@ -11,9 +11,17 @@ class Password_Details(models.Model):
     website_password = models.CharField(max_length=1000)
     website_notes = models.TextField(blank=True)
     shared_with = models.ManyToManyField(User, related_name='shared_with', blank=True)
+    viewable = models.BooleanField(default=False)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.website_name
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    secret_key = models.CharField(max_length=1000, blank=True)
+
+    def __str__(self):
+        return self.user.username
