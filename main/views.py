@@ -66,11 +66,14 @@ def home(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponse("You are logged in!")
+            return redirect('my-passwords')
         else:
             messages.info(request, 'Username OR password is incorrect')
 
     return render(request, 'main/sign-in.html')
+
+def sign_in(request):
+    return redirect('home')
 
 
 def sign_up(request):
@@ -117,17 +120,21 @@ def sign_out(request):
 
 @login_required(login_url='sign-in')
 def generate(request):
-    if request.method == 'POST':
-        length = request.POST.get('length')
-        uppercase = request.POST.get('uppercase')
-        lowercase = request.POST.get('lowercase')
-        numbers = request.POST.get('numbers')
-        special_chars = request.POST.get('symbols')
-        password = generate_password(
-            int(length), uppercase, lowercase, special_chars, numbers)
-        return render(request, 'main/generate.html', {'password': password, 'length': length, 'uppercase': uppercase, 'lowercase': lowercase, 'numbers': numbers, 'special_chars': special_chars})
+    if request.user.is_authenticated:        
+        if request.method == 'POST':
+            length = request.POST.get('length')
+            uppercase = request.POST.get('uppercase')
+            lowercase = request.POST.get('lowercase')
+            numbers = request.POST.get('numbers')
+            special_chars = request.POST.get('symbols')
+            password = generate_password(
+                int(length), uppercase, lowercase, special_chars, numbers)
+            return render(request, 'main/generate.html', {'password': password, 'length': length, 'uppercase': uppercase, 'lowercase': lowercase, 'numbers': numbers, 'special_chars': special_chars})
+        
+        return render(request, 'main/generate.html')
 
-    return render(request, 'main/generate.html')
+    else:
+        return redirect('sign-in')
 
 
 @login_required(login_url='sign-in')
@@ -454,4 +461,5 @@ def two_fa(request):
         return redirect('sign-in')
 
 
-
+# def two_fa_page(request):
+#     return render(request, 'main/2fa_setup.html')

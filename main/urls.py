@@ -12,4 +12,6 @@ urlpatterns = [
     path('share-password', views.share_password, name='share-password'),
     path('share', views.share, name='share'),
     path('two_fa', views.two_fa, name='two_fa'),
+    path('sign-in', views.sign_in, name='sign-in'),
+    # path('two_fa_page', views.two_fa_page, name='two_fa_page'),
 ]
