@@ -334,15 +334,17 @@
   align-items: center;
   background-color: var(--zircon);
   display: flex;
-  height: 926px;
+  height: 720px;
   left: 720px;
-  min-width: 720px;
-  padding: 0 279.9px;
+  min-width: 650px;
+  padding: 0px;
   position: absolute;
   top: 0;
+  border-radius: 5%;
 }
 
 .image-icon {
-  height: 141px;
-  width: 160px;
+  height: 100%;
+  width: 100%;
+  border-radius: 5%;
 }
