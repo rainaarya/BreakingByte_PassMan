@@ -20,7 +20,7 @@
                 <div class="link-list">
                     <div class="navbar-link-share dmsans-bold-comet-24px"><a href="/share" style="text-decoration: none;">Share</a></div>
                 </div>
-                <div class="navbar-link dmsans-normal-comet-18px"><a href="" style="text-decoration: none;">Rewards</a></div>
+                <div class="navbar-link dmsans-normal-comet-18px"><a href="/rewards" style="text-decoration: none;">Rewards</a></div>
                 <div class="buttons-set">
                     <div class="master-primary-button">
                         <a href="/sign-out" class="button-text" style="text-decoration: none;">Logout</a>
@@ -116,6 +116,11 @@
                 </div>
             </div>
             {% endfor %}
+            {% if not passwords and not shared_passwords %}
+            <p class="paragraph dmsans-normal-amethyst-smoke-18px" style="margin-top: 50px;">
+                No passwords shared with you or shared by you.
+            </p>
+            {% endif %}
             <div class="overlap-group5"></div>
         </form>
     </div>

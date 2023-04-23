@@ -17,25 +17,26 @@
                 </div>
                 <div class="navbar">
                     <div class="navbar-link dmsans-normal-comet-18px">Home</div>
-                    <div class="navbar-link-my-passwords dmsans-normal-comet-18px">My Passwords</div>
-                    <div class="navbar-link dmsans-normal-comet-18px">Generate</div>
+                    <div class="navbar-link dmsans-normal-comet-18px"><a href="/my-passwords" style="text-decoration: none;">My Passwords</a></div>
+                    <div class="navbar-link dmsans-normal-comet-18px"><a href="/generate" style="text-decoration: none;">Generate</a></div>
                     <div class="link-list">
-                        <div class="share dmsans-normal-comet-18px">Share</div>
+                        <div class="share dmsans-normal-comet-18px"><a href="/share" style="text-decoration: none;">Share</a></div>
                     </div>
-                    <div class="navbar-link-rewards navbar-link">Rewards</div>
+                    <div class="navbar-link dmsans-bold-comet-24px"><a href="/rewards" style="text-decoration: none;">Rewards</a></div>
                 </div>
                 <div class="buttons-set">
                     <div class="master-primary-button-3 master-primary-button-4">
-                        <div class="button-text-2 button-text-3">Logout</div>
+                        <a href="/sign-out" class="button-text-for-logout" style="text-decoration: none;">Logout
+                        </a>
                     </div>
-                    <img class="pajamasprofile" src="pajamas-profile.svg" alt="pajamas:profile" />
+                    <i class="fa fa-light fa-user fa-2xl" style="color: #5d5986;"></i>
                 </div>
             </div>
         </div>
-        <h1 class="heading dmsans-bold-comet-36px">Your Progress</h1>
+        <h1 class="heading dmsans-bold-comet-36px">Your Progress<br><br> Level {{ level }}, XP: {{ xp }} Pts</h1>
         <div class="progress">
-            <div class="progress-done" data-done="70">
-                70%
+            <div class="progress-done" data-done="{{ xp_percentage }}">
+                {{ xp_percentage }}%
             </div>
         </div>
         <script>
@@ -47,11 +48,6 @@
 
         <div class="flex-row">
             <div class="heading-1 heading-3 dmsans-bold-comet-36px">Recommended Tasks</div>
-            <img class="material-symbolsarrow-forward" src="material-symbols-arrow-forward.svg"
-                alt="material-symbols:arrow-forward" />
-            <div class="master-link">
-                <div class="view-all-tasks">View All Tasks</div>
-            </div>
             
         </div>
         <div class="group-3978">
@@ -60,9 +56,8 @@
                 <div class="image-placeholder">
                     <img class="image-icon" src="image-icon.svg" alt="Image icon" />
                 </div>
-                <div class="card-heading dmsans-bold-comet-28px">Task 1</div>
-                <p class="paragraph dmsans-normal-amethyst-smoke-16px">Lorem ipsum dolor sit amet consecte tur odwo
-                    dwoww
+                <div class="card-heading dmsans-bold-comet-28px">Generate</div>
+                <p class="paragraph dmsans-normal-amethyst-smoke-16px">Use our generate password feature and earn points.
                 </p>
                 <div class="master-primary-button">
                     <div class="button-text dmsans-normal-comet-16px">Continue</div>
@@ -72,9 +67,9 @@
                 <div class="image-placeholder-1 image-placeholder-3">
                     <img class="image-icon-1" src="image-icon-1.svg" alt="Image icon" />
                 </div>
-                <div class="card-heading-1 card-heading-3 dmsans-bold-comet-28px">Task 1</div>
+                <div class="card-heading-1 card-heading-3 dmsans-bold-comet-28px">Share</div>
                 <p class="paragraph-1 paragraph-3 dmsans-normal-amethyst-smoke-16px">
-                    Lorem ipsum dolor sit amet consecte tur odwo dwoww
+                    Earn points by sharing passwords with friends.
                 </p>
                 <div class="master-primary-button-1 master-primary-button-4">
                     <div class="button-text dmsans-normal-comet-16px">Continue</div>
@@ -84,9 +79,9 @@
                 <div class="image-placeholder-2 image-placeholder-3">
                     <img class="image-icon" src="image-icon-2.svg" alt="Image icon" />
                 </div>
-                <div class="card-heading-2 card-heading-3 dmsans-bold-comet-28px">Task 1</div>
+                <div class="card-heading-2 card-heading-3 dmsans-bold-comet-28px">Add</div>
                 <p class="paragraph-2 paragraph-3 dmsans-normal-amethyst-smoke-16px">
-                    Lorem ipsum dolor sit amet consecte tur odwo dwoww
+                    Add a new password to store and earn points.
                 </p>
                 <div class="master-primary-button-2 master-primary-button-4">
                     <div class="button-text-1 button-text-3 dmsans-normal-comet-16px">Continue</div>

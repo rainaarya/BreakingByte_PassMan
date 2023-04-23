@@ -290,6 +290,20 @@
   width: fit-content;
 }
 
+.button-text-for-logout {
+    color: var(--white);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-s);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
 .paragraph {
   letter-spacing: 0;
   line-height: 23.5px;

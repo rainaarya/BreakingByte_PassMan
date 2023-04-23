@@ -22,6 +22,7 @@ class Password_Details(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     secret_key = models.CharField(max_length=1000, blank=True)
+    xp = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username

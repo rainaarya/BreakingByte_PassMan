@@ -228,6 +228,7 @@
   gap: 26px;
   position: relative;
   width: fit-content;
+  margin-right: 55px;
 }
 
 .label {

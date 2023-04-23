@@ -45,7 +45,7 @@
   }
 
 .login {
-  align-items: flex-start;
+  align-items: center;
   background-color: var(--white);
   border: 1px none;
   display: flex;
@@ -237,6 +237,7 @@
   height: 926px;
   min-width: 1440px;
   position: relative;
+  margin-right: 60px;
 }
 
 .form {
@@ -341,6 +342,7 @@
   position: absolute;
   top: 0;
   border-radius: 5%;
+  margin-left: 50px;
 }
 
 .image-icon {

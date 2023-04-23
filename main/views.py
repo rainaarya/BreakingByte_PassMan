@@ -27,6 +27,116 @@ def verify_totp(secret_key, token):
     totp = pyotp.TOTP(secret_key)
     return totp.verify(token)
 
+def calculate_level(xp):
+    """
+    Calculate the current level and XP percentage based on XP using a cumulative sum of preceding XP values
+    """
+    # XP values required to reach each level, using a cumulative sum of preceding XP values
+    level_xp = [15, 35, 60, 90, 125, 165, 210, 260, 320, 390, 470, 560, 660, 770, 890, 1020, 1160, 1310, 1470, 1640, 1820]
+
+    # Iterate over the level XP values to find the current level
+    level = 0
+    for xp_required in level_xp:
+        if xp >= xp_required:
+            level += 1
+        else:
+            break
+
+    # Calculate XP percentage corresponding to the level
+    if level == len(level_xp):
+        xp_percentage = 100
+    else:
+        if level == 0:
+            xp_required_for_current_level = 0
+        else:
+            xp_required_for_current_level = level_xp[level - 1]
+        xp_required_for_next_level = level_xp[level]
+        xp_difference = xp_required_for_next_level - xp_required_for_current_level
+        xp_percentage = int(((xp - xp_required_for_current_level) / xp_difference) * 100)
+
+    return level, xp_percentage
+
+def give_password_strength_xp(password):
+    """
+    Create a password and return XP based on its strength category
+    """
+    # Determine the strength category based on password length and complexity
+
+    upper = string.ascii_uppercase
+    lower = string.ascii_lowercase
+    numbers = string.digits
+    symbols = string.punctuation
+
+    upYes = False
+    lowYes = False
+    numYes = False
+    symYes = False
+    count = 0
+
+    # Category 1: Weak (1XP)
+    if len(password) < 8:
+        xp = 1
+    
+    # Category 2: Medium (5XP)
+    if len(password) >= 8 and len(password) <= 16:
+
+        # Check if password contains uppercase letters
+        if any(char in upper for char in password):
+            upYes = True
+            count += 1
+
+        # Check if password contains lowercase letters
+        if any(char in lower for char in password):
+            lowYes = True
+            count += 1
+
+        # Check if password contains numbers
+        if any(char in numbers for char in password):
+            numYes = True
+            count += 1
+
+        # Check if password contains symbols
+        if any(char in symbols for char in password):
+            symYes = True
+            count += 1
+
+        if count >= 3:
+            xp = 5
+        else:
+            xp = 1
+
+    # Category 3: Strong (10XP)
+    if len(password) > 16:
+            
+            # Check if password contains uppercase letters
+            if any(char in upper for char in password):
+                upYes = True
+                count += 1
+    
+            # Check if password contains lowercase letters
+            if any(char in lower for char in password):
+                lowYes = True
+                count += 1
+    
+            # Check if password contains numbers
+            if any(char in numbers for char in password):
+                numYes = True
+                count += 1
+    
+            # Check if password contains symbols
+            if any(char in symbols for char in password):
+                symYes = True
+                count += 1
+    
+            if count == 4:
+                xp = 10
+            elif count == 3:
+                xp = 5
+            else:
+                xp = 1
+
+    return xp
+
 
 
 def generate_password(length, uppercase, lowercase, special_chars, numbers):
@@ -129,6 +239,11 @@ def generate(request):
             special_chars = request.POST.get('symbols')
             password = generate_password(
                 int(length), uppercase, lowercase, special_chars, numbers)
+            
+            profile=Profile.objects.get(user=request.user)
+            profile.xp = profile.xp + give_password_strength_xp(password)
+            profile.save()
+
             return render(request, 'main/generate.html', {'password': password, 'length': length, 'uppercase': uppercase, 'lowercase': lowercase, 'numbers': numbers, 'special_chars': special_chars})
         
         return render(request, 'main/generate.html')
@@ -222,7 +337,12 @@ def add_password(request):
             password = Password_Details(user=user, website_name=website_name, website_link=website_link,
                                         website_username=website_username, website_password=website_password, website_notes=website_notes)
             password.save()
-            return HttpResponse("Password added successfully!")
+
+            profile = Profile.objects.get(user=request.user)
+            profile.xp = profile.xp + 10 # add 10 xp for adding a password
+            profile.save()
+            
+            return redirect('my-passwords')
 
         return render(request, 'main/add-password.html')
     else:
@@ -297,6 +417,10 @@ def share_password(request):
             # model conatins shared_with = models.ManyToManyField(User, related_name='shared_with', blank=True), so we can use add
             password_details.shared_with.add(user_to_share)
             password_details.save()
+
+            profile = Profile.objects.get(user=request.user)
+            profile.xp = profile.xp + 15 # add 15 xp for sharing a password
+
             # print("Shared with: ", password_details.shared_with.all())
             return redirect('my-passwords')
         
@@ -461,5 +585,15 @@ def two_fa(request):
         return redirect('sign-in')
 
 
+@login_required(login_url='sign-in')
 def rewards(request):
-    return render(request, 'main/rewards.html')
+
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user=request.user)
+        xp = profile.xp
+
+        level, xp_percentage = calculate_level(xp)
+
+        return render(request, 'main/rewards.html', {'level': level, 'xp_percentage': xp_percentage, 'xp': xp})
+    else:
+        return redirect('sign-in')
