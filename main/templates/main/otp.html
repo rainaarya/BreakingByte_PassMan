@@ -1,0 +1,91 @@
+{% load static %}
+<html>
+
+<head>
+    <title>OTP</title>
+    <link rel="stylesheet" href="{% static 'css/otp.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    <h1>Enter OTP</h1>
+    <img src="https://cdn-icons-png.flaticon.com/512/9152/9152840.png" alt="OTP" width="200px" height="200px">
+    <p class="paragraph dmsans-normal-comet-18px" style=" margin-bottom: 50px;">To complete your
+        signup, an email has been sent to <b>{{email}}</b> for verification. <br>Please enter the OTP below
+        within <b> 2 minutes.</b></p>
+    
+    <form method="POST">
+        {% csrf_token %}
+    
+    <div class="otp-field">
+        <input type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+        <input class="space" type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+        <input type="text" maxlength="1" />
+    </div>
+
+    <div class="master-primary-button" style="margin-top: 30px; margin-left: 105px;">
+        <button name="otp" value="" type="submit" class="button-text dmsans-bold-white-18px"
+                            style="cursor: pointer; background-color: transparent; border: none; outline: none;">Submit
+                        </button>
+    </div>      
+    </form> 
+
+    <script>
+        const inputs = document.querySelectorAll(".otp-field input");
+
+        inputs.forEach((input, index) => {
+            input.dataset.index = index;
+            input.addEventListener("keyup", handleOtp);
+            input.addEventListener("paste", handleOnPasteOtp);
+        });
+
+        function handleOtp(e) {
+
+            const input = e.target;
+            let value = input.value;
+            let isValidInput = value.match(/[0-9a-z]/gi);
+            input.value = "";
+            input.value = isValidInput ? value[0] : "";
+
+            let fieldIndex = input.dataset.index;
+            if (fieldIndex < inputs.length - 1 && isValidInput) {
+                input.nextElementSibling.focus();
+            }
+
+            if (e.key === "Backspace" && fieldIndex > 0) {
+                input.previousElementSibling.focus();
+            }
+
+            if (fieldIndex == inputs.length - 1 && isValidInput) {
+                submit();
+            }
+        }
+
+        function handleOnPasteOtp(e) {
+            const data = e.clipboardData.getData("text");
+            const value = data.split("");
+            if (value.length === inputs.length) {
+                inputs.forEach((input, index) => (input.value = value[index]));
+                submit();
+            }
+        }
+
+        function submit() {
+            console.log("Submitting...");
+            // 👇 Entered OTP
+            let otp = "";
+            inputs.forEach((input) => {
+                otp += input.value;
+            });
+            //change the value of the button to the OTP
+            document.querySelector("button").value = otp;
+            
+        }
+    </script>
+</body>
+
+</html>

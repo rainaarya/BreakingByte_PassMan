@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,700");
+
+/* Variables */
+
+:root {
+    --black: 
+  rgba(0, 0, 0, 1);
+    --comet: 
+  rgba(93, 89, 136, 1);
+    --comet-2: 
+  rgb(118, 114, 175);
+    --manatee: 
+  rgba(141, 139, 166, 1);
+    --amethyst-smoke: 
+  rgba(151, 149, 180, 1);
+    --cadet-blue: 
+  rgba(172, 171, 194, 1);
+    --mischka: 
+  rgba(211, 210, 227, 1);
+    --concrete: 
+  rgba(242, 241, 249, 1);
+    --zircon: 
+  rgb(249, 248, 255);
+    --white: 
+  rgba(255, 255, 255, 1);
+  
+    --font-size-s: 16px;
+    --font-size-m: 18px;
+    --font-size-l: 24px;
+    --font-size-xl: 28px;
+    --font-size-xl: 30px;
+    --font-size-xxxl: 36px;
+    --font-size-l2: 32px;
+    --font-size-xl2: 44px;
+  
+    --font-family-dm_sans: "DM Sans";
+  }
+  
+  .master-primary-button {
+    align-items: center;
+    background-color: var(--comet);
+    border-radius: 30px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 18px 24px;
+    position: relative;
+    width: fit-content;
+  }
+
+  .button-text {
+    letter-spacing: 0;
+    line-height: 18px;
+    margin-top: -1.33px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  .dmsans-bold-white-18px {
+    color: var(--white);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-m);
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+
+body {
+    margin: 0;
+    font-family: "DM Sans";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    color: var(--comet);
+    background: var(--zircon);
+}
+
+.dmsans-normal-comet-18px {
+    color: var(--comet);
+    font-family: var(--font-family-dm_sans);
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.paragraph {
+    letter-spacing: 0;
+    line-height: 30px;
+    white-space: nowrap;
+}
+
+.otp-field {
+    display: flex;
+}
+
+.otp-field input {
+    width: 50px;
+    font-size: 32px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 2px;
+    border: 2px solid var(--mischka);
+    background: var(--comet-2);
+    font-weight: bold;
+    color: #fff;
+    outline: none;
+    transition: all 0.1s;
+}
+
+.otp-field input:focus {
+    border: 2px solid #a527ff;
+    box-shadow: 0 0 5px 5px #a527ff6a;
+}
+
+.disabled {
+    opacity: 0.5;
+}
+
+.space {
+    margin-right: 1rem !important;
+}

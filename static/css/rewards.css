@@ -329,8 +329,8 @@
 }
 
 .image-icon {
-  height: 25px;
-  width: 30px;
+  height: 100%;
+  width: 100%;
 }
 
 .card-heading {
@@ -457,8 +457,8 @@
 }
 
 .image-icon-1 {
-  height: 25px;
-  width: 29px;
+  height: 100%;
+  width: 100%;
 }
 
 .card-heading-1 {
