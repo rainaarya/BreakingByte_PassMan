@@ -14,9 +14,14 @@ from io import BytesIO
 import base64
 from django.core.mail import send_mail
 from datetime import datetime, timedelta
-
+import validators
 import random
 import string
+# import URLField
+from django.db import models
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
 
 import pyotp
 import qrcode
@@ -306,6 +311,9 @@ def generate(request):
     if request.user.is_authenticated:        
         if request.method == 'POST':
             length = request.POST.get('length')
+            #if length is not a number
+            if not length.isdigit():
+                return render(request, 'main/generate.html', {'password': 'Length must be a number!'})
             uppercase = request.POST.get('uppercase')
             lowercase = request.POST.get('lowercase')
             numbers = request.POST.get('numbers')
@@ -401,6 +409,31 @@ def add_password(request):
             website_username = request.POST.get('website-username')
             website_password = request.POST.get('website-password')
             website_notes = request.POST.get('website-notes')
+
+            errors = []
+
+            # check conditions for website name, link, username and password and notes
+            if not website_name:
+                errors.append('Website name is required!')
+            if not website_link:
+                errors.append('Website link is required!')
+            if not website_username:
+                errors.append('Website username is required!')
+            if not website_password:
+                errors.append('Website password is required!')
+            if not website_notes:
+                errors.append('Website notes is required!')
+
+            # url_form_field = models.URLField()
+            # try:
+            #     url = url_form_field.clean(website_link)
+            # except ValidationError:
+            #     errors.append('Website link is not valid!')
+
+            if errors:
+                return render(request, 'main/add-password.html', {'errors': errors})
+            
+            # encrypt the password
 
             website_password = encrypt(
                 settings.SECRET_HERE.encode(), website_password.encode())
