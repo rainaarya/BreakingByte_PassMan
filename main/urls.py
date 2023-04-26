@@ -15,5 +15,6 @@ urlpatterns = [
     path('sign-in', views.sign_in, name='sign-in'),
     path('rewards', views.rewards, name='rewards'),
     path('otp', views.otp, name='otp'),
+    path('homepage', views.homepage, name='homepage'),
     # path('two_fa_page', views.two_fa_page, name='two_fa_page'),
 ]

@@ -176,6 +176,9 @@ def generate_otp(secret_key):
 
 # Create your views here.
 
+def homepage(request):
+    return render(request, 'main/homepage.html')
+
 def home(request):
     if request.user.is_authenticated:
         return redirect('my-passwords')
@@ -198,6 +201,9 @@ def sign_in(request):
 
 
 def sign_up(request):
+
+    if request.user.is_authenticated:
+        return redirect('my-passwords')
 
     form = CreateUserForm()
 
