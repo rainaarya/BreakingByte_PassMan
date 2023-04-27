@@ -633,6 +633,10 @@ def share(request):
             user_passwords = Password_Details.objects.filter(user=request.user, shared_with__isnull=False)
         else:
             user_passwords = Password_Details.objects.filter(user=request.user, shared_with__isnull=False, website_name__icontains=search_text)
+        
+        # remove duplicates
+        user_passwords = user_passwords.distinct()
+
         if user_passwords:
             for password in user_passwords:
                 if password.shared_with.all(): # if shared with is not empty
@@ -641,7 +645,8 @@ def share(request):
                     password.website_notes = password.website_notes.capitalize()
                     password.website_password = ''
                     password.website_link = "https://www.google.com/s2/favicons?sz=128&domain_url=" + password.website_link
-            
+                
+                        
         if not search:
             shared_with_me_passwords = Password_Details.objects.filter(shared_with=request.user)
         else:
@@ -678,7 +683,7 @@ def two_fa(request):
                         password_detail = Password_Details.objects.get(id=password_id)
                         password_detail.viewable = False
                         password_detail.save()
-                        return HttpResponse("Invalid OTP")
+                        return HttpResponse("Invalid OTP! Try again.")
                     except Password_Details.DoesNotExist:
                         return HttpResponse("Password does not exist.")
                     
