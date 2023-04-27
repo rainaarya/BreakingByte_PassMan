@@ -194,8 +194,15 @@ def sign_in(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request, user)
-            return redirect('my-passwords')
+            #if user is active:
+            if user.is_active:
+                login(request, user)
+                return redirect('my-passwords')
+            
+            else:
+                messages.info(request, 'Please verify your account first')
+                user.delete()
+                return redirect('sign-in')
         else:
             messages.info(request, 'Username or password is incorrect')
 
