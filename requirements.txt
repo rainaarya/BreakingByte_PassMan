@@ -1,0 +1,5 @@
+Django==4.1.2
+pycryptodome==3.17
+pyotp==2.7.0
+qrcode==7.3.1
+validators==0.20.0
