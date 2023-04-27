@@ -4,6 +4,7 @@
 <head>
     <title>Homepage</title>
     <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <script src="https://kit.fontawesome.com/60f93b821e.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -30,9 +31,13 @@
             <p class="paragraph dmsans-normal-amethyst-smoke-18px">
                 Solve poor password habits easily and quickly, so you can secure every account with one, simple login.
             </p>
-            <div class="button-set">
+            <div class="button-set" style="gap: 150px;">
                 <div class="master-primary-button-1">
                     <a href="/sign-up" class="button-text-2 button-text-4" style="text-decoration: none;">Get Started
+                    </a>
+                </div>
+                <div class="master-secondary-button-1">
+                    <a href="#learn" class="button-text-3 button-text-4 dmsans-normal-comet-18px" style="text-decoration: none;">Learn More
                     </a>
                 </div>
             </div>
@@ -45,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="content-cards-v9 content-cards">
+        <div id="learn" class="content-cards-v9 content-cards">
             <div class="group-39782">
                 <p class="heading-1 dmsans-bold-comet-36px">We support the following features</p>
                 <p class="paragraph-1 paragraph-3 dmsans-normal-amethyst-smoke-18px">
@@ -100,6 +105,10 @@
                 </p>
             </div>
         </div>
+        <a href="#top" class="button-text-3 button-text-4 dmsans-normal-comet-18px" style="text-decoration: none;">
+        <i class="fa fa-light fa-angle-up fa-2xl" style="color: #5d5986;"></i>
+        </a>
+
     </div>
 </body>
 

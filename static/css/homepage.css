@@ -39,6 +39,10 @@
   
   /* Classes */
   
+  html {
+    scroll-behavior: smooth;
+  }
+  
   .dmsans-normal-amethyst-smoke-18px {
     color: var(--amethyst-smoke);
     font-family: var(--font-family-dm_sans);
@@ -570,10 +574,11 @@
   display: flex;
   gap: 24px;
   height: 65px;
-  margin-right: 110px;
+  margin-right: 341px;
   margin-top: 39px;
   position: relative;
   width: 58px;
+
 }
 
 .master-secondary-button-1 {
