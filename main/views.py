@@ -202,7 +202,6 @@ def sign_in(request):
             else:
                 messages.info(request, 'Please verify your account first')
                 user.delete()
-                return redirect('sign-in')
         else:
             messages.info(request, 'Username or password is incorrect')
 
@@ -221,6 +220,7 @@ def sign_up(request):
         if form.is_valid():
             user_form = form.save()
             user_form.is_active = False
+            user_form.save()
             profile = Profile.objects.create(user=user_form)
             secret = generate_secret_key()
             profile.secret_key = secret
