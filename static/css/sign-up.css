@@ -259,11 +259,12 @@
   background-color: var(--comet);
   border-radius: 30px;
   display: flex;
+  margin-top: 50px;
   gap: 8px;
   justify-content: center;
   padding: 18px 24px;
   position: relative;
-  width: 503px;
+  width: 600px;
 }
 
 .button-text-1 {
