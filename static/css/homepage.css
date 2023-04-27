@@ -214,15 +214,18 @@
   background-color: var(--zircon);
   display: flex;
   height: 500px;
+  width: 500px;
   left: 0;
-  padding: 0 197.5px;
+  padding: 0px;
+  border-radius: 30px;
   position: absolute;
   top: 0;
 }
 
 .image-icon-2 {
-  height: 141px;
-  width: 160px;
+  height: 100%;
+  width: 100%;
+  border-radius: 30px;
 }
 
 .pager {
@@ -267,8 +270,9 @@
 }
 
 .image-icon-1 {
-  height: 28px;
-  width: 32px;
+  height: 100%;
+  width: 100%;
+  border-radius: 30px;
 }
 
 .headings {
@@ -326,8 +330,9 @@
 }
 
 .image-icon {
-  height: 106px;
-  width: 123px;
+  height: 100%;
+  width: 100%;
+  border-radius: 30px;
 }
 
 .image-placeholder-1 {
