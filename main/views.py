@@ -474,6 +474,15 @@ def add_password(request):
 def view_edit_password(request):
 
     if request.user.is_authenticated:
+            if 'edit' in request.session:
+                request.session.pop('edit')
+            if 'website_link' in request.session:
+                request.session.pop('website_link')
+            if 'website_username' in request.session:
+                request.session.pop('website_username')
+            if 'website_password' in request.session:
+                request.session.pop('website_password')
+
             if request.method == 'POST':
                 if request.POST.get('edit'):
                     password_id = request.POST.get('edit')           
@@ -481,19 +490,26 @@ def view_edit_password(request):
                     if Password_Details.objects.filter(id=password_id).exists():
                         password_detail = Password_Details.objects.get(id=password_id)
                         if password_detail.user == request.user:
+
+                            # check if request.post website link, username and password are not empty
+                            if not request.POST.get('website-link'):
+                                return HttpResponse("Website link is required!")
+                            if not request.POST.get('website-username'):
+                                return HttpResponse("Website username is required!")
+                            if not request.POST.get('website-password'):
+                                return HttpResponse("Website password is required!")
+                            
                             request.session['id_pass'] = password_id
-                            return redirect('edit-password')
+                            request.session['edit'] = True
+                            request.session['website_link'] = request.POST.get('website-link')
+                            request.session['website_username'] = request.POST.get('website-username')
+                            request.session['website_password'] = request.POST.get('website-password')
+                            
+                            return redirect('two_fa')
                         else:
                             return HttpResponse("You can't edit this password!")
-
-                if request.POST.get('delete'):
-                    password_id = request.POST.get('delete')
-                    password_detail = Password_Details.objects.get(id=password_id)
-                    if password_detail.user == request.user:
-                        password_detail.delete()
-                        return redirect('my-passwords')
                     else:
-                        return HttpResponse("You can't delete this password!")
+                        return HttpResponse("Password does not exist!")
 
             else:
 
@@ -701,6 +717,20 @@ def two_fa(request):
                     try:
                         password_detail = Password_Details.objects.get(id=password_id)
                         password_detail.viewable = True
+
+                        if request.session.get('edit'):
+                            website_link = request.session.get('website_link')
+                            website_username = request.session.get('website_username')
+                            website_password = request.session.get('website_password')
+
+                            website_password = encrypt(settings.SECRET_HERE.encode(), website_password.encode())
+                            website_password = encrypt(settings.SECRET_HERE.encode(), website_password.encode())
+
+
+                            password_detail.website_link = website_link
+                            password_detail.website_username = website_username
+                            password_detail.website_password = website_password
+                        
                         password_detail.save()                                                    
                         #request.session['id_pass'] = request.POST.get('view-password-user')
                         return redirect('view-edit-password')
