@@ -182,6 +182,11 @@ def homepage(request):
 def home(request):
     if request.user.is_authenticated:
         return redirect('my-passwords')
+    
+    return redirect('homepage')
+
+
+def sign_in(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -192,12 +197,9 @@ def home(request):
             login(request, user)
             return redirect('my-passwords')
         else:
-            messages.info(request, 'Username OR password is incorrect')
+            messages.info(request, 'Username or password is incorrect')
 
     return render(request, 'main/sign-in.html')
-
-def sign_in(request):
-    return redirect('home')
 
 
 def sign_up(request):

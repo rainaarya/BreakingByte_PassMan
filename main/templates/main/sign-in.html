@@ -3,6 +3,8 @@
 
 <head>
   <title>Sign In</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/sign-in.css' %}">
 </head>
 
@@ -28,28 +30,45 @@
         <img class="image-icon" src="https://wallpapercave.com/wp/wp9055092.jpg" alt="Image icon" />
       </div>
       <div class="form">
-      <form method="POST">
-        {% csrf_token %}
-        <h1 class="heading">Sign In</h1>
-        <div class="label label-2 dmsans-bold-comet-18px">Email</div>
-        <div class="master-input-text">
-          <input name="username" class="input-placeholder input dmsans-normal-manatee-18px"
-            style="background-color: transparent; border: none; outline: none;" placeholder="Username" />
+        {% if messages %}
+        {% for message in messages %}
+
+        <div class="error" style="width: 550px; margin-bottom: 20px;">
+          <!-- print errors with fieldname <dash> error -->
+          <div class="alert alert-warning alert-dismissible fade show" role="alert" style=" border-radius: 30px;">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+          </div>
         </div>
-        <div class="label-1 label-2 dmsans-bold-comet-18px">Password</div>
-        <div class="master-input-text">
-          <input type="password" name="password" class="input-placeholder input dmsans-normal-manatee-18px"
-            style="background-color: transparent; border: none; outline: none;" placeholder="Password" />
-        </div>
-        <div class="master-primary-button-1">
-          <button type="submit" class="button-text-1"
-            style="cursor: pointer; background-color: transparent; border: none; outline: none;">Sign In
-          </button>
-        </div>
-      </form>
+        {% endfor %}
+
+        {% endif %}
+
+        <form method="POST">
+          {% csrf_token %}
+          <h1 class="heading">Sign In</h1>
+          <div class="label label-2 dmsans-bold-comet-18px">Username</div>
+          <div class="master-input-text">
+            <input name="username" class="input-placeholder input dmsans-normal-manatee-18px"
+              style="background-color: transparent; border: none; outline: none;" placeholder="Username" />
+          </div>
+          <div class="label-1 label-2 dmsans-bold-comet-18px">Password</div>
+          <div class="master-input-text">
+            <input type="password" name="password" class="input-placeholder input dmsans-normal-manatee-18px"
+              style="background-color: transparent; border: none; outline: none;" placeholder="Password" />
+          </div>
+          <div class="master-primary-button-1">
+            <button type="submit" class="button-text-1"
+              style="cursor: pointer; background-color: transparent; border: none; outline: none;">Sign In
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
